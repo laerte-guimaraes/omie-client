@@ -28,10 +28,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency 'factory_bot'
-  spec.add_development_dependency 'cpf_cnpj'
+  spec.add_development_dependency 'factory_bot', '>= 5.0'
+  spec.add_development_dependency 'cpf_cnpj', '~> 0.5'
 
   # development dependencies
-  spec.add_dependency 'rest-client'
-  spec.add_dependency 'activesupport'
+  spec.add_dependency 'rest-client', '>= 2.0'
+  spec.add_dependency 'activesupport', '>= 5.0'
 end

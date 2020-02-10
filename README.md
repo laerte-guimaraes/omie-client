@@ -26,6 +26,7 @@ you need to create the keys at
 or [Omie generate keys](https://app.omie.com.br/developer/generate-key/).
 Then, set your credentials:
 ```ruby
+require 'omie'
 Omie.app_key = "app_key"
 Omie.app_secret = "app_secret"
 ```
