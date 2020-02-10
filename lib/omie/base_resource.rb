@@ -20,20 +20,5 @@ module Omie
         send("#{key}=", value) if respond_to?(key)
       end
     end
-
-    def as_json
-      data = {}
-
-      instance_variables.each do |variable|
-        name = variable.to_s.gsub('@', '')
-        data[name] = self.send(name).as_json
-      end
-
-      data
-    end
-
-    def to_json
-      as_json.to_json
-    end
   end
 end
