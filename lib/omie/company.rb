@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext'
+
 module Omie
   # This class abstracts the Company resource from Omie (Ref: Cliente) which
   # is used for all kinds of companies in Omie, mainly Clients and Suppliers.
@@ -158,9 +160,9 @@ module Omie
     #   the company itself updated
     def save
       company = if saved?
-                  Omie::Company.update(as_json(except: ['tag_values']))
+                  Omie::Company.update(as_json.except(['tag_values']))
                 else
-                  Omie::Company.create(as_json(except: ['tag_values']))
+                  Omie::Company.create(as_json.except(['tag_values']))
                 end
 
       self.codigo_cliente_omie = company.codigo_cliente_omie if company

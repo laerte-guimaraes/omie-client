@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
+require 'omie'
+
 describe Omie::Company do
   let(:company_data) { build(:omie_company_data) }
 

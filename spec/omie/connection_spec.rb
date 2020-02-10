@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
+require 'omie'
+
 describe Omie::Connection do
   let(:custom_response) { RestClient::Response.new }
 
