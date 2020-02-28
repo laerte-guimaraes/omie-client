@@ -106,6 +106,14 @@ describe Omie::Company do
       company.save
     end
 
+    it 'does not include tag_values in payload' do
+      company.codigo_cliente_omie = 123
+      company.add_tag('Cliente')
+
+      expect(Omie::Company).to receive(:update).with(company.as_json.except('tag_values'))
+      company.save
+    end
+
     it 'add tags to instance' do
       expected_aray = [{ tag: 'cliente' }]
       company.add_tag('cliente')
