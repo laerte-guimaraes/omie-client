@@ -110,7 +110,8 @@ describe Omie::Company do
       company.codigo_cliente_omie = 123
       company.add_tag('Cliente')
 
-      expect(Omie::Company).to receive(:update).with(company.as_json.except('tag_values'))
+      expect(Omie::Company).to receive(:update)
+        .with(company.as_json.except('tag_values'))
       company.save
     end
 

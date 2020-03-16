@@ -8,6 +8,7 @@ require_relative 'omie/error'
 require_relative 'omie/info'
 require_relative 'omie/version'
 
+# High level namespace for Omie Client lib
 module Omie
   cattr_accessor :app_key, :app_secret
 end

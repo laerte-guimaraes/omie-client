@@ -35,12 +35,16 @@ describe Omie::Product do
   describe '.find' do
     it 'may return nil' do
       allow(Omie::Connection).to receive(:request).and_raise(Omie::RequestError)
-      product = described_class.find(codigo_produto: product_data[:codigo_produto])
+      product = described_class.find(
+        codigo_produto: product_data[:codigo_produto]
+      )
       expect(product).to be_blank
     end
 
     it 'returns the found product' do
-      product = described_class.find(codigo_produto: product_data[:codigo_produto])
+      product = described_class.find(
+        codigo_produto: product_data[:codigo_produto]
+      )
       attributes.each do |attr|
         expect(product.send(attr)).to_not be_blank
       end
@@ -55,8 +59,9 @@ describe Omie::Product do
     end
 
     it 'returns a list of products' do
-      allow(Omie::Connection).to receive(:request)
-        .and_return('produto_servico_cadastro' => [product_data, product_data_2])
+      allow(Omie::Connection).to receive(:request).and_return(
+        'produto_servico_cadastro' => [product_data, product_data_2]
+      )
       products = described_class.list
 
       expect(products.count).to eq(2)
