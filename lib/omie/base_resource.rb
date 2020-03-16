@@ -22,12 +22,12 @@ module Omie
       end
     end
 
-    def self.connection(uri, call, params)
+    def self.request(uri, call, params)
       Omie::Connection.request(uri, call, params)
     end
 
-    def self.connection_ininitalize(uri, call, params)
-      response = connection(uri, call, params)
+    def self.request_and_initialize(uri, call, params)
+      response = request(uri, call, params)
       new(response)
     end
   end

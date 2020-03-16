@@ -38,7 +38,7 @@ module Omie
     # @raise [Omie::RequestError]
     #   in case of failed requests due to failed validations
     def self.create(params = {})
-      connection_ininitalize(URI, CALLS[:create], params)
+      request_and_initialize(URI, CALLS[:create], params)
     end
 
     # Update an existing product using the
@@ -58,7 +58,7 @@ module Omie
     #   in case of failed requests due to failed validations or when the
     #   product was not found.
     def self.update(params = {})
-      connection_ininitalize(URI, CALLS[:update], params)
+      request_and_initialize(URI, CALLS[:update], params)
     end
 
     # Search for a product using the
@@ -76,7 +76,7 @@ module Omie
     # @return [nil]
     #   in case of no product found
     def self.find(params)
-      connection_ininitalize(URI, CALLS[:find], params)
+      request_and_initialize(URI, CALLS[:find], params)
     rescue Omie::RequestError
       nil
     end
@@ -96,7 +96,7 @@ module Omie
     def self.list(page = 1, per_page = 50)
       params = { pagina: page, registros_por_pagina: per_page }
 
-      response = connection(URI, CALLS[:list], params)
+      response = request(URI, CALLS[:list], params)
       response['produto_servico_cadastro'].map do |product|
         Omie::Product.new(product)
       end
