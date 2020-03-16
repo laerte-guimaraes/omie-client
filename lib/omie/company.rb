@@ -13,13 +13,13 @@ module Omie
   # Attributes' names are equal to the Portuguese names described in the API
   # documentation.
   class Company < Omie::BaseResource
-    COMPANY_CALLS = {
-      LIST: 'ListarClientes',
-      CREATE: 'IncluirCliente',
-      UPDATE: 'AlterarCliente',
-      FIND: 'ConsultarCliente',
-      DELETE: 'ExcluirCliente',
-      SIMPLE: 'UpsertCliente'
+    CALLS = {
+      list: 'ListarClientes',
+      create: 'IncluirCliente',
+      update: 'AlterarCliente',
+      find: 'ConsultarCliente',
+      delete: 'ExcluirCliente',
+      upsert: 'UpsertCliente'
     }.freeze
 
     URI = '/v1/geral/clientes/'
@@ -43,8 +43,7 @@ module Omie
     # @raise [Omie::RequestError]
     #   in case of failed requests due to failed validations
     def self.create(params = {})
-      response = Omie::Connection.request(URI, COMPANY_CALLS[:CREATE], params)
-      Omie::Company.new(response)
+      connection_ininitalize(URI, CALLS[:create], params)
     end
 
     # Updates an existing company using the
@@ -64,8 +63,7 @@ module Omie
     #   in case of failed requests due to failed validations or when the
     #   company was not found.
     def self.update(params = {})
-      response = Omie::Connection.request(URI, COMPANY_CALLS[:UPDATE], params)
-      Omie::Company.new(response)
+      connection_ininitalize(URI, CALLS[:update], params)
     end
 
     # Search for a company using the
@@ -83,8 +81,7 @@ module Omie
     # @return [nil]
     #   in case of no company found
     def self.find(params)
-      response = Omie::Connection.request(URI, COMPANY_CALLS[:FIND], params)
-      Omie::Company.new(response)
+      connection_ininitalize(URI, CALLS[:find], params)
     rescue Omie::RequestError
       nil
     end
@@ -104,7 +101,7 @@ module Omie
     def self.list(page = 1, per_page = 50)
       params = { pagina: page, registros_por_pagina: per_page }
 
-      response = Omie::Connection.request(URI, COMPANY_CALLS[:LIST], params)
+      response = connection(URI, CALLS[:list], params)
       response['clientes_cadastro'].map { |client| Omie::Company.new(client) }
     rescue Omie::RequestError
       []
