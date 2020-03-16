@@ -86,6 +86,13 @@ describe Omie::Company do
     end
   end
 
+  describe '.associate' do
+    it 'performs correctly' do
+      allow(Omie::Connection).to receive(:request).and_return(true)
+      expect(Omie::Company.associate('123', 'ABC')).to be_truthy
+    end
+  end
+
   describe 'instance methods' do
     let(:company) { Omie::Company.new }
 
@@ -141,6 +148,16 @@ describe Omie::Company do
     it 'sets tag_values when overriding tags' do
       company.tags = [{ tag: 'Cliente' }, { tag: 'Fornecedor' }]
       expect(company.tag_values).to eq(%w[Cliente Fornecedor])
+    end
+
+    it 'properly associate its ids' do
+      expect(Omie::Company).to receive(:associate)
+        .with('123', 'ABC').and_return(true)
+
+      company.codigo_cliente_integracao = 'ABC'
+      company.codigo_cliente_omie = '123'
+
+      expect(company.associate_entry).to be_truthy
     end
   end
 end

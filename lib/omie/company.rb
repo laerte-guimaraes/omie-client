@@ -19,7 +19,8 @@ module Omie
       update: 'AlterarCliente',
       find: 'ConsultarCliente',
       delete: 'ExcluirCliente',
-      upsert: 'UpsertCliente'
+      upsert: 'UpsertCliente',
+      associate: 'AssociarCodIntCliente'
     }.freeze
 
     URI = '/v1/geral/clientes/'
@@ -107,6 +108,28 @@ module Omie
       []
     end
 
+    # Associate the local entry with an existing entry at Omie
+    # {https://app.omie.com.br/api/v1/geral/clientes/#AssociarCodIntCliente
+    # AssociarCodIntCliente}. Omie will find the existing entry through the
+    # {#codigo_cliente_omie} and updates its {#codigo_cliente_integracao}
+    #
+    # @!scope class
+    # @param codigo_cliente_integracao [String]
+    #   The id of the existing entry at Omie
+    # @param codigo_cliente_omie [String]
+    #   The integration id to be used by the existing entry - usually a local
+    #   id.
+    # @return [Omie::Company]
+    #   the updated company
+    def self.associate(codigo_cliente_omie, codigo_cliente_integracao)
+      params = {
+        codigo_cliente_integracao: codigo_cliente_integracao,
+        codigo_cliente_omie: codigo_cliente_omie
+      }
+
+      request(URI, CALLS[:associate], params)
+    end
+
     # Get method for tags attribute.
     #
     # @return [Array<Hash>]
@@ -172,6 +195,14 @@ module Omie
     # @return [Boolean]
     def saved?
       !codigo_cliente_omie.blank?
+    end
+
+    # Updates the omie entry with the local id for integration purposes.
+    #
+    # @return [Boolean]
+    def associate_entry
+      Omie::Company.associate(codigo_cliente_omie, codigo_cliente_integracao)
+      true
     end
   end
 end
