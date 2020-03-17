@@ -1,4 +1,7 @@
-image: ruby:2.5.1
+default:
+  image: ruby:2.5.1
+  before_script:
+    - bundle install
 
 rspec:
   script:
