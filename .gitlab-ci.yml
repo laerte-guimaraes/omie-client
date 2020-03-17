@@ -1,0 +1,28 @@
+variables:
+  WEBSOCKET_URL: "ws://localhost:8080/cable"
+  MONGO_URL: "mongo:27017"
+  ADAPTER: 'any_cable'
+  CABLE_REDIS_URL: "redis://redis:6379/1"
+  SIDEKIQ_REDIS_URL: "redis://redis:6379/12"
+  REDIS_URL: 'redis://redis:6379/1'
+  ANYCABLE_RPC_HOST: 'anycable-rails:50051'
+  AUTH: 'no'
+  TEST_HEALTH_ENDPOITNS: 'no'
+
+image: ruby:2.5.1
+before_script:
+  - cp config/peerdustry.yml.example config/peerdustry.yml
+  - ruby -v
+  - apt update -qq && apt install -y --no-install-recommends build-essential apt-utils ghostscript mongo-tools mongodb-clients
+  - bundle install
+  - mongo mongodb://mongo:27017 < setup/replica-set-gitlab.js
+
+services:
+- name: 'mongo:4.0'
+  alias: 'mongo'
+  command: ['mongod', '--replSet', 'rs0', '--oplogSize', '128', '--setParameter', 'maxTransactionLockRequestTimeoutMillis=30']
+
+test_job:
+  script:
+    - RAILS_ENV=test bundle exec rake db:mongoid:create_indexes
+    - bundle exec rspec
