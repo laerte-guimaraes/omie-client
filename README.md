@@ -99,6 +99,46 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 Bug reports and pull requests are welcome. If you want to add a new resource
 from the API, please open an issue first to avoid duplicated work.
 
+### Building and Testing Locally
+
+To properly test if the gem is working properly, you can install it locally:
+```sh
+gem build omie-client.gemspec
+gem install ./omie-client-x.y.z.gem
+```
+The `x.y.z` represents the version described in [lib/omie/version.rb](lib/omie/version.rb)
+
+You can make some smoke test to check if everything is ok, especially because
+this gem interacts with Omie API, requiring some integration tests that
+is not covered by the existing unit tests.
+* Open irb:
+```sh
+irb
+```
+
+```ruby
+require 'omie'
+=> true
+Omie::VERSION
+=> "x.y.z"
+# Default credentials provided by Omie API for tests
+Omie.app_key = '1560731700'
+Omie.app_secret = '226dcf372489bb45ceede61bfd98f0f1'
+
+Omie::Company.list
+Omie::Product.list
+```
+
+If everything is working fine and you have the proper credentials to upload
+the new version, run:
+
+```sh
+gem push omie-client-x.y.z.gem
+Pushing gem to RubyGems.org...
+Successfully registered gem: omie-client (x.y.z)
+```
+> You may need to authenticate at rubygems first => https://guides.rubygems.org/make-your-own-gem/
+
 ## License
 
 See the [LICENSE](LICENSE) file.
