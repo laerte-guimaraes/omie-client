@@ -16,7 +16,8 @@ module Omie
       update: 'AlterarProduto',
       find: 'ConsultarProduto',
       delete: 'ExcluirProduto',
-      simple: 'UpsertProduto'
+      simple: 'UpsertProduto',
+      associate: 'AssociarCodIntProduto'
     }.freeze
 
     URI = '/v1/geral/produtos/'
@@ -104,6 +105,26 @@ module Omie
       []
     end
 
+    # Associate the local entry with an existing entry at Omie
+    # {https://app.omie.com.br/api/v1/geral/clientes/#AssociarCodIntProduto
+    # AssociarCodIntProduto}. Omie will find the existing entry through the
+    # {#codigo_produto} and updates its {#codigo_produto_integracao}
+    #
+    # @!scope class
+    # @param codigo_produto [String]
+    #   The id of the existing entry at Omie
+    # @param codigo_produto_integracao [String]
+    #   The integration id to be used by the existing entry - usually a local
+    #   id.
+    def self.associate(codigo_produto, codigo_produto_integracao)
+      params = {
+        codigo_produto: codigo_produto,
+        codigo_produto_integracao: codigo_produto_integracao
+      }
+
+      request(URI, CALLS[:associate], params)
+    end
+
     # Save the product.
     #
     # If the product is new a record is created on Omie, otherwise
@@ -128,6 +149,14 @@ module Omie
     # @return [Boolean]
     def saved?
       !codigo_produto.blank?
+    end
+
+    # Updates the omie entry with the local id for integration purposes.
+    #
+    # @return [Boolean]
+    def associate_entry
+      Omie::Product.associate(codigo_produto, codigo_produto_integracao)
+      true
     end
   end
 end

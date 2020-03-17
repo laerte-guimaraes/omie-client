@@ -114,13 +114,11 @@ module Omie
     # {#codigo_cliente_omie} and updates its {#codigo_cliente_integracao}
     #
     # @!scope class
-    # @param codigo_cliente_integracao [String]
-    #   The id of the existing entry at Omie
     # @param codigo_cliente_omie [String]
+    #   The id of the existing entry at Omie
+    # @param codigo_cliente_integracao [String]
     #   The integration id to be used by the existing entry - usually a local
     #   id.
-    # @return [Omie::Company]
-    #   the updated company
     def self.associate(codigo_cliente_omie, codigo_cliente_integracao)
       params = {
         codigo_cliente_integracao: codigo_cliente_integracao,

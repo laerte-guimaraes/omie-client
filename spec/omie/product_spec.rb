@@ -88,6 +88,13 @@ describe Omie::Product do
     end
   end
 
+  describe '.associate' do
+    it 'performs correctly' do
+      allow(Omie::Connection).to receive(:request).and_return(true)
+      expect(described_class.associate('123', 'ABC')).to be_truthy
+    end
+  end
+
   describe 'instance methods' do
     let(:product) { Omie::Product.new }
 
@@ -106,6 +113,16 @@ describe Omie::Product do
       product.codigo_produto = 123
       expect(Omie::Product).to receive(:update).with(product.as_json)
       product.save
+    end
+
+    it 'properly associate its ids' do
+      expect(Omie::Product).to receive(:associate)
+        .with('123', 'ABC').and_return(true)
+
+      product.codigo_produto_integracao = 'ABC'
+      product.codigo_produto = '123'
+
+      expect(product.associate_entry).to be_truthy
     end
   end
 end

@@ -89,7 +89,7 @@ describe Omie::Company do
   describe '.associate' do
     it 'performs correctly' do
       allow(Omie::Connection).to receive(:request).and_return(true)
-      expect(Omie::Company.associate('123', 'ABC')).to be_truthy
+      expect(described_class.associate('123', 'ABC')).to be_truthy
     end
   end
 
