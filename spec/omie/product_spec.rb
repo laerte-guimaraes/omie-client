@@ -10,7 +10,7 @@ describe Omie::Product do
   let(:attributes) do
     %i[
       codigo_produto_integracao codigo_produto descricao unidade ncm
-      valor_unitario
+      valor_unitario codigo
     ]
   end
 
