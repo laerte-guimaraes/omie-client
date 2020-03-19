@@ -24,7 +24,7 @@ module Omie
 
     attr_accessor :ncm, :valor_unitario, :unidade, :descricao_status
     attr_accessor :codigo_produto_integracao, :codigo_produto, :descricao
-    attr_accessor :codigo
+    attr_accessor :codigo, :tipoItem # They do not keep the same name style =(
 
     # Record a new product using the
     # {https://app.omie.com.br/api/v1/geral/produtos/#IncluirProduto

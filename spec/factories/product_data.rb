@@ -9,7 +9,7 @@ FactoryBot.define do
     unidade { 'UN' }
     ncm { '84799090' }
     valor_unitario { 200 }
-
+    tipoItem { '00' } # Mercadoria para Revenda
     initialize_with { attributes }
   end
 end
