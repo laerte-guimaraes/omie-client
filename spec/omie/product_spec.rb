@@ -124,5 +124,25 @@ describe Omie::Product do
 
       expect(product.associate_entry).to be_truthy
     end
+
+    it 'updates all attributes' do
+      data = {
+        codigo_produto_integracao: 'x',
+        codigo_produto: -1,
+        codigo: 'yyz',
+        descricao: 'outra',
+        unidade: 'PC',
+        ncm: '123',
+        valor_unitario: 34,
+        tipoItem: '04'
+      }
+
+      product
+      product.update_attributes(data)
+
+      data.each_key do |key|
+        expect(product.send(key)).to eq(data[key])
+      end
+    end
   end
 end
