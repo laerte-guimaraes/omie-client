@@ -11,7 +11,15 @@ module Omie
     # values
     def initialize(args = {})
       args.each do |key, value|
-        send("#{key}=", value) if respond_to?(key)
+        key_s = key.to_sym
+        has_internal_const = self.class.const_defined?('INTERNAL_MODELS')
+        if has_internal_const && self.class::INTERNAL_MODELS.key?(key_s)
+          klass = self.class::INTERNAL_MODELS[key_s]
+          instance = klass.new(value)
+          send("#{key}=", instance)
+        elsif respond_to?(key_s)
+          send("#{key}=", value)
+        end
       end
     end
 
@@ -28,6 +36,7 @@ module Omie
 
     def self.request_and_initialize(uri, call, params)
       response = request(uri, call, params)
+
       new(response)
     end
   end
