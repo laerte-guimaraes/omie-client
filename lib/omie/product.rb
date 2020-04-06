@@ -20,11 +20,16 @@ module Omie
       associate: 'AssociarCodIntProduto'
     }.freeze
 
+    INTERNAL_MODELS = {
+      recomendacoes_fiscais: Omie::TaxRecommendation
+    }.freeze
+
     URI = '/v1/geral/produtos/'
 
     attr_accessor :ncm, :valor_unitario, :unidade, :descricao_status
     attr_accessor :codigo_produto_integracao, :codigo_produto, :descricao
     attr_accessor :codigo, :tipoItem # They do not keep the same name style =(
+    attr_accessor :recomendacoes_fiscais # {Omie::TaxRecommendation}
 
     # Record a new product using the
     # {https://app.omie.com.br/api/v1/geral/produtos/#IncluirProduto

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    omie-client (0.1.4)
+    omie-client (0.1.5)
       activesupport (>= 5.0)
       rest-client (>= 2.0)
 
@@ -70,7 +70,7 @@ GEM
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.6)
+    unf_ext (0.0.7.7)
     unicode-display_width (1.6.1)
 
 PLATFORMS

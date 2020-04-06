@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 
 describe Omie::Product do
-  let(:product_data) { build(:omie_product_data) }
+  let(:tax_recommendation) { build(:omie_tax_recommendation_data) }
+  let(:product_data) do
+    build(:omie_product_data, recomendacoes_fiscais: tax_recommendation)
+  end
 
   let(:product_data_2) do
-    build(:omie_product_data, descricao: 'Another Product')
+    build(:omie_product_data, descricao: 'Another Product',
+                              recomendacoes_fiscais: tax_recommendation)
   end
 
   let(:attributes) do
     %i[
       codigo_produto_integracao codigo_produto descricao unidade ncm
-      valor_unitario codigo tipoItem
+      valor_unitario codigo tipoItem recomendacoes_fiscais
     ]
   end
 
@@ -29,6 +33,7 @@ describe Omie::Product do
       attributes.each do |attr|
         expect(product.send(attr)).to_not be_blank
       end
+      expect(product.recomendacoes_fiscais).to be_a(Omie::TaxRecommendation)
     end
   end
 
@@ -48,6 +53,7 @@ describe Omie::Product do
       attributes.each do |attr|
         expect(product.send(attr)).to_not be_blank
       end
+      expect(product.recomendacoes_fiscais).to be_a(Omie::TaxRecommendation)
     end
   end
 
@@ -70,6 +76,7 @@ describe Omie::Product do
         attributes.each do |attr|
           expect(product.send(attr)).to_not be_blank
         end
+        expect(product.recomendacoes_fiscais).to be_a(Omie::TaxRecommendation)
       end
     end
   end
@@ -85,6 +92,7 @@ describe Omie::Product do
       attributes.each do |attr|
         expect(product.send(attr)).to_not be_blank
       end
+      expect(product.recomendacoes_fiscais).to be_a(Omie::TaxRecommendation)
     end
   end
 
