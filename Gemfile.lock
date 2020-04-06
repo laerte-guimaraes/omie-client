@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    omie-client (0.1.5)
+    omie-client (0.1.6)
       activesupport (>= 5.0)
       rest-client (>= 2.0)
 
