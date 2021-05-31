@@ -70,6 +70,28 @@ describe Omie::Company do
         end
       end
     end
+
+    it 'applies filter properly' do
+      cnpj = '53853160001-16'
+      expected_params = {
+        pagina: 1,
+        registros_por_pagina: 40,
+        apenas_importado_api: 'N',
+        clientesFiltro: {
+          cnpj_cpf: cnpj
+        }
+      }
+
+      expect(Omie::Connection).to receive(:request)
+        .with(Omie::Company::URI, Omie::Company::CALLS[:list], expected_params)
+        .and_return('clientes_cadastro' => [company_data])
+
+      companies = described_class.list(
+        registros_por_pagina: 40, clientesFiltro: { cnpj_cpf: cnpj }
+      )
+
+      expect(companies.count).to eq(1)
+    end
   end
 
   describe '.update' do
