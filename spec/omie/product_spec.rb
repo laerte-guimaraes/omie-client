@@ -79,6 +79,27 @@ describe Omie::Product do
         expect(product.recomendacoes_fiscais).to be_a(Omie::TaxRecommendation)
       end
     end
+
+    it 'allows multiple options' do
+      expected_params = {
+        pagina: 1,
+        registros_por_pagina: 10,
+        apenas_importado_api: 'S',
+        filtrar_apenas_omiepdv: 'N',
+        filtrar_apenas_descricao: 'test'
+      }
+
+      allow(Omie::Connection).to receive(:request)
+        .with(Omie::Product::URI, Omie::Product::CALLS[:list], expected_params)
+        .and_return('produto_servico_cadastro' => [product_data])
+
+      products = described_class.list(
+        registros_por_pagina: 10, apenas_importado_api: 'S',
+        filtrar_apenas_descricao: 'test'
+      )
+
+      expect(products.count).to eq(1)
+    end
   end
 
   describe '.update' do

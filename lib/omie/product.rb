@@ -94,26 +94,22 @@ module Omie
     # records.
     #
     # @!scope class
-    # @param page [Integer]
-    #   the page to be returned.
-    # @param per_page [Integer]
-    #   the number of items per page (max: 50).
-    # @param only_imported [String]
-    #   related to 'apenas_importado_api' params, accept 'S' or 'N'.
-    # @param only_pdv [String]
-    #   related to 'filtrar_apenas_omiepdv' params, accept 'S' or 'N'.
+    # @param [Hash] options
+    #   The options param follows the same structure described by
+    #   https://app.omie.com.br/api/v1/geral/produtos/#produto_servico_list_request
     # @return [Array<Omie::Product>]
     #   the list of found companies
-    def self.list(
-      page = 1, per_page = 50, only_imported = 'N', only_pdv = 'N'
-    )
-      params = {
-        pagina: page, registros_por_pagina: per_page,
-        apenas_importado_api: only_imported,
-        filtrar_apenas_omiepdv: only_pdv
+    def self.list(options = {})
+      default = {
+        pagina: 1, registros_por_pagina: 50,
+        apenas_importado_api: 'N', filtrar_apenas_omiepdv: 'N'
       }
 
-      response = request(URI, CALLS[:list], params)
+      default.each do |k, v|
+        options[k] = v unless options.key?(k)
+      end
+
+      response = request(URI, CALLS[:list], options)
       response['produto_servico_cadastro'].map do |product|
         Omie::Product.new(product)
       end
