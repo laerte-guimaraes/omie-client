@@ -28,7 +28,7 @@ module Omie
     attr_accessor :email, :cnpj_cpf, :razao_social, :contato, :nome_fantasia
     attr_accessor :codigo_cliente_integracao, :codigo_cliente_omie, :endereco
     attr_accessor :cidade, :complemento, :estado, :endereco_numero, :cep
-    attr_accessor :codigo_pais, :bairro, :inscricao_estadual
+    attr_accessor :codigo_pais, :bairro, :inscricao_estadual, :inativa
 
     # Record a new company using the
     # {https://app.omie.com.br/api/v1/geral/clientes/#IncluirCliente
