@@ -3,6 +3,7 @@
 require 'bundler/setup'
 require 'omie'
 require 'factory_bot'
+require 'byebug'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
